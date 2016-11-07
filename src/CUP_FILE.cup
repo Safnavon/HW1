@@ -1,0 +1,50 @@
+/************************************/
+/* PRELIMINARY DECLARATIONS SECTION */
+/************************************/
+
+import java_cup.runtime.*;
+   
+/**********************/
+/* TERMINALS (TOKENS) */
+/**********************/
+terminal PLUS;
+terminal MINUS;
+terminal TIMES;
+terminal DIVIDE;
+terminal LPAREN;
+ternminal RPAREN;
+
+/******************************/
+/* PRECEDENCE + ASSOCIATIVITY */
+/******************************/
+
+/**********************/
+/* TERMINALS (TOKENS) */
+/**********************/
+terminal Integer	NUMBER;
+
+/*****************************************/
+/* NON TERMINALS :: IGNORE IN EXERCISE 1 */
+/*****************************************/
+non terminal Integer    expr, factor, term;
+
+/*******************/
+/* GRAMMAR SECTION */
+/*******************/      
+
+expr      ::=	expr:e PLUS  factor:f {: RESULT = new Integer(e.intValue() + f.intValue()); :} |
+				expr:e MINUS factor:f {: RESULT = new Integer(e.intValue() - f.intValue()); :} |
+				factor:f              {: RESULT = new Integer(f.intValue());                :}
+				;
+      
+factor    ::=	factor:f TIMES term:t  {: RESULT = new Integer(f.intValue() * t.intValue()); :} |
+				factor:f DIVIDE term:t {: RESULT = new Integer(f.intValue() / t.intValue()); :} |
+				term:t                 {: RESULT = new Integer(t.intValue());                :}
+				;
+   
+term      ::=	LPAREN expr:e RPAREN {: RESULT = e; :} |
+				NUMBER:n             {: RESULT = n; :}
+				;
+
+
+      				
