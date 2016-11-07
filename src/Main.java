@@ -27,8 +27,8 @@ public class Main {
   static public void main(String argv[]) {    
     /* Start the parser */
     try
-    {
-      parser p = new parser(new Lexer(new FileReader(argv[0])));
+    { 
+      CUP_FILECup p = new CUP_FILECup(new Lexer(new FileReader(argv[0])));
       Object result = p.parse().value;
       System.out.format("%d%n", result);
     } catch (Exception e) {

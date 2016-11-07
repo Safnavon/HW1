@@ -4,15 +4,15 @@
 
 import java_cup.runtime.*;
    
-/**********************/
+/**********************/ 
 /* TERMINALS (TOKENS) */
 /**********************/
 terminal PLUS;
 terminal MINUS;
 terminal TIMES;
-terminal DIVIDE;
+terminal DIVIDE; 
 terminal LPAREN;
-ternminal RPAREN;
+terminal RPAREN;
 
 /******************************/
 /* PRECEDENCE + ASSOCIATIVITY */

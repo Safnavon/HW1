@@ -46,15 +46,16 @@ import java_cup.runtime.*;
 /*****************************************************************************/   
 /* Code between %{ and %}, both of which must be at the beginning of a line, */
 /* will be copied letter to letter into the Lexer class code.                */
-/* Here you declare member variables and functions that are used inside the  */
-/* scanner actions.                                                          */  
+/* Here you declare member variables and functions that are used inside the  */ 
+/* scanner actions.                                                          */   
 /*****************************************************************************/   
 %{   
-    /*********************************************************************************/
+    /*********************************************************************************/ 
     /* Create a new java_cup.runtime.Symbol with information about the current token */
     /*********************************************************************************/
-    private Symbol symbol(int type)               {return new Symbol(type, yyline, yycolumn);}
-    private Symbol symbol(int type, Object value) {return new Symbol(type, yyline, yycolumn, value);}
+    private Symbol symbol(int type, String name)               {System.out.printf("%d:%s\n",yyline, name); return new Symbol(type, yyline, yycolumn);}
+    private Symbol symbol(int type, Object value,String name) {System.out.printf("%d:%s(%s)\n",yyline, name ,yytext());return new Symbol(type, yyline, yycolumn, value);}
+
 %}
 
 /***********************/
@@ -82,12 +83,12 @@ INTEGER			= 0 | [1-9][0-9]*
    
 <YYINITIAL> {
    
-"+"					{ return symbol(sym.PLUS);}
-"-"					{ return symbol(sym.MINUS);}
-"*"					{ return symbol(sym.TIMES);}
-"/"					{ return symbol(sym.DIVIDE);}
-"("					{ return symbol(sym.LPAREN);}
-")"					{ return symbol(sym.RPAREN);}
-{INTEGER}			{ return symbol(sym.NUMBER, new Integer(yytext()));}   
+"+"					{ return symbol(CUP_FILESym.PLUS, "PLUS");}
+"-"					{ return symbol(CUP_FILESym.MINUS, "MINUS");}
+"*"					{ return symbol(CUP_FILESym.TIMES, "TIMES");}
+"/"					{ return symbol(CUP_FILESym.DIVIDE, "DIVIDE");}
+"("					{ return symbol(CUP_FILESym.LPAREN, "LPAREN");}
+")"					{ return symbol(CUP_FILESym.RPAREN, "RPAREN");}
+{INTEGER}			{return symbol(CUP_FILESym.NUMBER, new Integer(yytext()),"NUMBER");}   
 {WhiteSpace}		{ /* just skip what was found, do nothing */ }
 }
