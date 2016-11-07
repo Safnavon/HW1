@@ -91,4 +91,5 @@ INTEGER			= 0 | [1-9][0-9]*
 ")"					{ return symbol(CUP_FILESym.RPAREN, "RPAREN");}
 {INTEGER}			{return symbol(CUP_FILESym.NUMBER, new Integer(yytext()),"NUMBER");}   
 {WhiteSpace}		{ /* just skip what was found, do nothing */ }
+.|\n       		  	{ throw new Exception("Unrecognized string in line " + yyline + ": \"" + yytext() + "\""); }
 }
