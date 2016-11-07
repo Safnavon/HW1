@@ -3,5 +3,6 @@
 	<classpathentry excluding="**/*.cup|**/*.lex" kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="var" path="CUP_RUNTIME_JAR"/>
+	<classpathentry kind="lib" path="C:/eclipse/configuration/org.eclipse.osgi/521/0/.cp/CupParser.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

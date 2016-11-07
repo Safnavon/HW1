@@ -31,7 +31,7 @@ public class Main {
       CUP_FILECup p = new CUP_FILECup(new Lexer(new FileReader(argv[0])));
       Object result = p.parse().value;
       System.out.format("%d%n", result);
-    } catch (Exception e) {
+    } catch (Throwable e) {
       /* do cleanup here -- possibly rethrow e */
       e.printStackTrace();
     }
