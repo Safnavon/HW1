@@ -4,7 +4,7 @@
 
 import java_cup.runtime.*;
    
-/**********************/ 
+/**********************/  
 /* TERMINALS (TOKENS) */
 /**********************/
 terminal PLUS;
@@ -17,7 +17,7 @@ terminal ASSIGN;
 terminal BOOLEAN;
 terminal BREAK;
 terminal CLASS;
-terminal CLASS_ID;
+terminal CLASS_ID;  
 terminal COMMA;
 terminal CONTINUE;
 terminal DOT;
@@ -83,11 +83,12 @@ expr      ::=	expr:e PLUS  factor:f {: RESULT = new Integer(e.intValue() + f.int
       
 factor    ::=	factor:f TIMES term:t  {: RESULT = new Integer(f.intValue() * t.intValue()); :} |
 				factor:f DIVIDE term:t {: RESULT = new Integer(f.intValue() / t.intValue()); :} |
-				term:t                 {: RESULT = new Integer(t.intValue());                :}
+				term:t                 {: RESULT = new Integer(t.intValue());                :} |
+				error				 {: System.out.printf("errr"); :}								
 				;
    
 term      ::=	LPAREN expr:e RPAREN {: RESULT = e; :} |
-				NUMBER:n             {: RESULT = n; :}
+				NUMBER:n             {: RESULT = n; :} |
 				;
 
 
