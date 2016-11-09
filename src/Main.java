@@ -22,18 +22,19 @@
 */
    
 import java.io.*;
+import java_cup.runtime.Symbol;
    
 public class Main {
   static public void main(String argv[]) {    
-    /* Start the parser */
     try
     { 
-      CUP_FILECup p = new CUP_FILECup(new Lexer(new FileReader(argv[0])));
-      Object result = p.parse().value;
-      System.out.format("%d%n", result);
+      Lexer l = new Lexer(new FileReader(argv[0]));
+      Symbol s;
+      do{
+    	   s = l.next_token();
+      } while(s.sym != CUP_FILESym.EOF);
     } catch (Throwable e) {
-      /* do cleanup here -- possibly rethrow e */
-      e.printStackTrace();
+    	e.printStackTrace();
     }
   }
 }
