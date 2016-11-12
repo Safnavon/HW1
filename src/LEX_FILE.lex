@@ -53,8 +53,8 @@ import java_cup.runtime.*;
     /*********************************************************************************/ 
     /* Create a new java_cup.runtime.Symbol with information about the current token */
     /*********************************************************************************/
-    private Symbol symbol(int type, String name)              {System.out.printf("%d:%s\n",yyline+1, name); return new Symbol(type, yyline, yycolumn);}
-    private Symbol symbol(int type, String name, Object value) {System.out.printf("%d:%s(%s)\n",yyline+1, name ,yytext());return new Symbol(type, yyline, yycolumn, value);}
+    private Symbol symbol(int type, String name)              {System.out.printf("%d: %s\n",yyline+1, name); return new Symbol(type, yyline, yycolumn);}
+    private Symbol symbol(int type, String name, Object value) {System.out.printf("%d: %s(%s)\n",yyline+1, name ,yytext());return new Symbol(type, yyline, yycolumn, value);}
 
 %}
 
@@ -66,7 +66,7 @@ WhiteSpace		= {LineTerminator} | [ \t\f] | \/\*(.|[\r\n])*?\*\/ | \/\/.*
 INTEGER			= 0 | [1-9][0-9]*
 CLASS_ID= [A-Z][a-zA-Z0-9_]*
 ID= [a-z][a-zA-Z0-9_]*
-QUOTE= \".*\" 
+QUOTE=\"([^\"\\]|\\.)*\"
 
 /******************************/
 /* DOLAR DOLAR - DON'T TOUCH! */
@@ -88,20 +88,20 @@ QUOTE= \".*\"
    
 "+"					{ return symbol(CUP_FILESym.PLUS, "PLUS");}
 "-"					{ return symbol(CUP_FILESym.MINUS, "MINUS");}
-"*"					{ return symbol(CUP_FILESym.TIMES, "TIMES");}
+"*"					{ return symbol(CUP_FILESym.MULTIPLY, "MULTIPLY");}
 "/"					{ return symbol(CUP_FILESym.DIVIDE, "DIVIDE");}
-"("					{ return symbol(CUP_FILESym.LPAREN, "LPAREN");}
-")"					{ return symbol(CUP_FILESym.RPAREN, "RPAREN");}
-{INTEGER}			{return symbol(CUP_FILESym.NUMBER,"NUMBER", new Integer(yytext()));}   
+"("					{ return symbol(CUP_FILESym.LP, "LP");}
+")"					{ return symbol(CUP_FILESym.RP, "RP");}
+{INTEGER}			{return symbol(CUP_FILESym.INTEGER,"INTEGER", new Integer(yytext()));}   
 {WhiteSpace}		{ /* just skip what was found, do nothing */ }
-"assign"					{ return symbol(CUP_FILESym.ASSIGN, "ASSIGN");}
+"="					{ return symbol(CUP_FILESym.ASSIGN, "ASSIGN");}
+"=="					{ return symbol(CUP_FILESym.EQUAL, "EQUAL");}
 "boolean"					{ return symbol(CUP_FILESym.BOOLEAN, "BOOLEAN");}
 "break"					{ return symbol(CUP_FILESym.BREAK, "BREAK");}
 "class"					{ return symbol(CUP_FILESym.CLASS, "CLASS");}
 ","					{ return symbol(CUP_FILESym.COMMA, "COMMA");}
 "continue"					{ return symbol(CUP_FILESym.CONTINUE, "CONTINUE");}
 "."					{ return symbol(CUP_FILESym.DOT, "DOT");}
-"="					{ return symbol(CUP_FILESym.EQUAL, "EQUAL");}
 "extends"					{ return symbol(CUP_FILESym.EXTENDS, "EXTENDS");}
 "else"					{ return symbol(CUP_FILESym.ELSE, "ELSE");}
 "false"					{ return symbol(CUP_FILESym.FALSE, "FALSE");}
@@ -109,7 +109,6 @@ QUOTE= \".*\"
 ">="					{ return symbol(CUP_FILESym.GTE, "GTE");}
 "if"					{ return symbol(CUP_FILESym.IF, "IF");}
 "int"					{ return symbol(CUP_FILESym.INT, "INT");}
-"integer"					{ return symbol(CUP_FILESym.INTEGER, "INTEGER");}
 "&&"					{ return symbol(CUP_FILESym.LAND, "LAND");}
 "["					{ return symbol(CUP_FILESym.LB, "LB");}
 "{"					{ return symbol(CUP_FILESym.LCBR, "LCBR");}
@@ -125,7 +124,7 @@ QUOTE= \".*\"
 "]"					{ return symbol(CUP_FILESym.RB, "RB");}
 "}"					{ return symbol(CUP_FILESym.RCBR, "RCBR");}
 "return"					{ return symbol(CUP_FILESym.RETURN, "RETURN");}
-"rp"					{ return symbol(CUP_FILESym.RP, "RP");}
+")"					{ return symbol(CUP_FILESym.RP, "RP");}
 ";"					{ return symbol(CUP_FILESym.SEMI, "SEMI");}
 "static"					{ return symbol(CUP_FILESym.STATIC, "STATIC");}
 "string"					{ return symbol(CUP_FILESym.STRING, "STRING");} 
@@ -133,7 +132,7 @@ QUOTE= \".*\"
 "true"					{ return symbol(CUP_FILESym.TRUE, "TRUE");}
 "void"					{ return symbol(CUP_FILESym.VOID, "VOID");} 
 "while"					{ return symbol(CUP_FILESym.WHILE, "WHILE");}
-<<EOF>>					{  }  
+<<EOF>>					{ return symbol(CUP_FILESym.EOF, "EOF"); }  
 {CLASS_ID}					{ return symbol(CUP_FILESym.CLASS_ID, "CLASS_ID", yytext());}
 {ID}					{ return symbol(CUP_FILESym.ID, "ID", yytext());}
 {QUOTE}					{ return symbol(CUP_FILESym.QUOTE, "QUOTE", yytext());}

@@ -20,10 +20,10 @@
   > java Main test.txt
   where test.txt is an test input file for the calculator.
 */
-   
+
 import java.io.*;
 import java_cup.runtime.Symbol;
-   
+
 /*public class Main {
   static public void main(String argv[]) {    
      Start the parser 
@@ -39,19 +39,16 @@ import java_cup.runtime.Symbol;
   }
 }*/
 
-public class Main {
-	  static public void main(String argv[]) {    
-	    try
-	    { 
-	      Lexer lexer = new Lexer(new FileReader(argv[0]));
-	      Symbol symbol;
-	      do{
-	    	  symbol = lexer.next_token();
-	      } while(symbol.sym != CUP_FILESym.EOF);
-	    } catch (Throwable e) {
-	    	e.printStackTrace();
-	    }
-	  }
+public class Main { 
+	static public void main(String argv[]) {
+		try {
+			Lexer lexer = new Lexer(new FileReader(argv[0]));
+			Symbol symbol;
+			do {
+				symbol = lexer.next_token();
+			} while (symbol.sym != CUP_FILESym.EOF);
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 	}
-
-
+}
