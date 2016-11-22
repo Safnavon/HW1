@@ -1,11 +1,11 @@
 /***************************/
-/* FILE NAME: MatrixLexer.lex */
-/***************************/
+/* FILE NAME: OperationLexer.lex */
+/***************************/  
 
 /***************************/
 /* AUTHOR: OREN ISH SHALOM */
 /***************************/
-
+ 
 /*************/
 /* USER CODE */
 /*************/
@@ -26,7 +26,7 @@ import java_cup.runtime.*;
 /* Lexer is the name of the class JFlex will create. */
 /* The code will be written to the file Lexer.java.  */
 /*****************************************************/ 
-%class MatrixLexer
+%class OperationLexer
 
 /********************************************************************/
 /* The current line number can be accessed with the variable yyline */
@@ -81,10 +81,10 @@ INTEGER			= [1-9][0-9]*
 /* So these regular expressions will only be matched if the   */
 /* scanner is in the start state YYINITIAL.                   */
 /**************************************************************/
-   
-<YYINITIAL> {
-
-"ROW_ID"					{ return symbol(MatrixSym.ROW_ID, "ROW_ID", new Integer(yytext().charAt(1));}
+  
+<YYINITIAL> { 
+ 
+{ROW_ID}					{ return symbol(MatrixSym.ROW_ID, "ROW_ID", new Integer(yytext().charAt(1));}
 "+"					{ return symbol(MatrixSym.PLUS, "PLUS");}
 "-"					{ return symbol(MatrixSym.MINUS, "MINUS");}
 "<="					{ retun symbol(MatrixSym.ASSIGN, "ASSIGN");}

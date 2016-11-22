@@ -81,8 +81,8 @@ INTEGER			= 0 | [1-9][0-9]*
 /* scanner is in the start state YYINITIAL.                   */
 /**************************************************************/
    
-<YYINITIAL> {
-   
+<YYINITIAL> { 
+    
 
 "["					{ return symbol(MatrixSym.LB, "LB");}
 "]"					{ return symbol(MatrixSym.RB, "RB");}
