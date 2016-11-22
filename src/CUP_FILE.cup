@@ -9,10 +9,10 @@ import java_cup.runtime.*;
 /**********************/
 terminal PLUS;
 terminal MINUS;
-terminal TIMES;
+terminal MULTIPLY;
 terminal DIVIDE; 
-terminal LPAREN;
-terminal RPAREN;
+terminal LP;
+terminal RP;
 terminal ASSIGN;
 terminal BOOLEAN;
 terminal BREAK;
@@ -30,10 +30,8 @@ terminal GTE;
 terminal ID;
 terminal IF;
 terminal INT;
-terminal INTEGER;
 terminal LAND;
 terminal LB;
-terminal LP;
 terminal LCBR;
 terminal LENGTH;
 terminal NEW;
@@ -42,13 +40,11 @@ terminal LOR;
 terminal LT;
 terminal LTE;
 terminal MOD;
-terminal MULTIPLY;
 terminal NEQUAL;
 terminal NULL;
 terminal RB;
 terminal RCBR;
 terminal RETURN;
-terminal RP;
 terminal SEMI;
 terminal STATIC;
 terminal STRING;
@@ -65,7 +61,7 @@ terminal WHILE;
 /**********************/
 /* TERMINALS (TOKENS) */
 /**********************/
-terminal Integer	NUMBER;
+terminal Integer	INTEGER;
 
 /*****************************************/
 /* NON TERMINALS :: IGNORE IN EXERCISE 1 */
@@ -76,19 +72,19 @@ non terminal Integer    expr, factor, term;
 /* GRAMMAR SECTION */
 /*******************/      
 
-expr      ::=	expr:e PLUS  factor:f {: RESULT = new Integer(e.intValue() + f.intValue()); :} |
-				expr:e MINUS factor:f {: RESULT = new Integer(e.intValue() - f.intValue()); :} |
-				factor:f              {: RESULT = new Integer(f.intValue());                :}
+expr      ::=	expr:e PLUS  factor:f 	  {: RESULT = new Integer(e.intValue() + f.intValue()); :} |
+				expr:e MINUS factor:f 	  {: RESULT = new Integer(e.intValue() - f.intValue()); :} |
+				factor:f              	  {: RESULT = new Integer(f.intValue());                :}
 				;
       
-factor    ::=	factor:f TIMES term:t  {: RESULT = new Integer(f.intValue() * t.intValue()); :} |
-				factor:f DIVIDE term:t {: RESULT = new Integer(f.intValue() / t.intValue()); :} |
-				term:t                 {: RESULT = new Integer(t.intValue());                :} |
-				error				 {: System.out.printf("errr"); :}								
+factor    ::=	factor:f MULTIPLY term:t  {: RESULT = new Integer(f.intValue() * t.intValue()); :} |
+				factor:f DIVIDE term:t    {: RESULT = new Integer(f.intValue() / t.intValue()); :} |
+				term:t                    {: RESULT = new Integer(t.intValue());                :} |
+				error				      {: System.out.printf("errr"); :}								
 				;
    
-term      ::=	LPAREN expr:e RPAREN {: RESULT = e; :} |
-				NUMBER:n             {: RESULT = n; :} |
+term      ::=	LP expr:e RP 		  	  {: RESULT = e; :} |
+				INTEGER:n             	  {: RESULT = n; :} |
 				;
 
 
