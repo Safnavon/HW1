@@ -87,8 +87,9 @@ INTEGER			= [1-9][0-9]*
 {ROW_ID}					{ return symbol(MatrixSym.ROW_ID, "ROW_ID", new Integer(yytext().charAt(1));}
 "+"					{ return symbol(MatrixSym.PLUS, "PLUS");}
 "-"					{ return symbol(MatrixSym.MINUS, "MINUS");}
-"<="					{ retun symbol(MatrixSym.ASSIGN, "ASSIGN");}
-"<=>"					{ retun symbol(MatrixSym.SWAP, "SWAP");}
+"/"					{ return symbol(MatrixSym.DIVIDE, "DIVIDE");}
+"<-"					{ retun symbol(MatrixSym.ASSIGN, "ASSIGN");}
+"<->"					{ retun symbol(MatrixSym.SWAP, "SWAP");}
 <<EOF>>					{ return symbol(MatrixSym.EOF, "EOF"); }
 {INTEGER}			{return symbol(CUP_FILESym.INTEGER,"INTEGER", new Integer(yytext()));}
 {WhiteSpace}		{ /* just skip what was found, do nothing */ }

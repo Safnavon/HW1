@@ -86,7 +86,8 @@ INTEGER			= 0 | [1-9][0-9]*
 
 "["					{ return symbol(MatrixSym.LB, "LB");}
 "]"					{ return symbol(MatrixSym.RB, "RB");}
-"/"					{ retun symbol(MatrixSym.SEMI, "SEMI");}
+";"					{ retun symbol(MatrixSym.SEMI, "SEMI");}
+"\"					{ retun symbol(MatrixSym.DIVIDE, "DIVIDE");}
 <<EOF>>					{ return symbol(MatrixSym.EOF, "EOF"); }  
 {INTEGER}			{return symbol(CUP_FILESym.INTEGER,"INTEGER", new Integer(yytext()));}   
 {WhiteSpace}		{ /* just skip what was found, do nothing */ }

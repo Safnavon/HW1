@@ -11,6 +11,7 @@ terminal PLUS;
 terminal MINUS;
 terminal ASSIGN;
 terminal SWAP;
+terminal DIVIDE;
  
 
 
@@ -28,20 +29,18 @@ terminal Integer	ROW_ID;
 /*****************************************/
 /* NON TERMINALS :: IGNORE IN EXERCISE 1 */
 /*****************************************/
-non terminal Integer    expr, factor, term;
+non terminal Integer    expr;
  
 /*******************/
 /* GRAMMAR SECTION */
 /*******************/       
-
+/*
 expr      ::=	expr:e PLUS  factor:f 	  {: RESULT = new Integer(e.intValue() + f.intValue()); :} |
 				expr:e MINUS factor:f 	  {: RESULT = new Integer(e.intValue() - f.intValue()); :} |
 				factor:f              	  {: RESULT = new Integer(f.intValue());                :}
 				;
-      
-
    
-
+/*
    
 term      ::=	INTEGER:n             	  {: RESULT = n; :} |
 				;
