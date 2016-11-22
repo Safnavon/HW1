@@ -1,5 +1,5 @@
 /***************************/
-/* FILE NAME: LEX_FILE.lex */
+/* FILE NAME: MatrixLexer.lex */
 /***************************/
 
 /***************************/
@@ -26,7 +26,7 @@ import java_cup.runtime.*;
 /* Lexer is the name of the class JFlex will create. */
 /* The code will be written to the file Lexer.java.  */
 /*****************************************************/ 
-%class Lexer
+%class MatrixLexer
 
 /********************************************************************/
 /* The current line number can be accessed with the variable yyline */
@@ -64,9 +64,6 @@ import java_cup.runtime.*;
 LineTerminator	= \r|\n|\r\n
 WhiteSpace		= {LineTerminator} | [ \t\f] | \/\*(.|[\r\n])*?\*\/ | \/\/.*
 INTEGER			= 0 | [1-9][0-9]*
-CLASS_ID= [A-Z][a-zA-Z0-9_]*
-ID= [a-z][a-zA-Z0-9_]*
-QUOTE=\"([^\"\\]|\\.)*\"
 
 /******************************/
 /* DOLAR DOLAR - DON'T TOUCH! */
@@ -86,56 +83,13 @@ QUOTE=\"([^\"\\]|\\.)*\"
    
 <YYINITIAL> {
    
-"+"					{ return symbol(CUP_FILESym.PLUS, "PLUS");}
-"-"					{ return symbol(CUP_FILESym.MINUS, "MINUS");}
-"*"					{ return symbol(CUP_FILESym.MULTIPLY, "MULTIPLY");}
-"/"					{ return symbol(CUP_FILESym.DIVIDE, "DIVIDE");}
-"("					{ return symbol(CUP_FILESym.LP, "LP");}
-")"					{ return symbol(CUP_FILESym.RP, "RP");}
+
+"["					{ return symbol(MatrixSym.LB, "LB");}
+"]"					{ return symbol(MatrixSym.RB, "RB");}
+"/"					{ retun symbol(MatrixSym.SEMI, "SEMI");}
+<<EOF>>					{ return symbol(MatrixSym.EOF, "EOF"); }  
 {INTEGER}			{return symbol(CUP_FILESym.INTEGER,"INTEGER", new Integer(yytext()));}   
 {WhiteSpace}		{ /* just skip what was found, do nothing */ }
-"="					{ return symbol(CUP_FILESym.ASSIGN, "ASSIGN");}
-"=="					{ return symbol(CUP_FILESym.EQUAL, "EQUAL");}
-"boolean"					{ return symbol(CUP_FILESym.BOOLEAN, "BOOLEAN");}
-"break"					{ return symbol(CUP_FILESym.BREAK, "BREAK");}
-"class"					{ return symbol(CUP_FILESym.CLASS, "CLASS");}
-","					{ return symbol(CUP_FILESym.COMMA, "COMMA");}
-"continue"					{ return symbol(CUP_FILESym.CONTINUE, "CONTINUE");}
-"."					{ return symbol(CUP_FILESym.DOT, "DOT");}
-"extends"					{ return symbol(CUP_FILESym.EXTENDS, "EXTENDS");}
-"else"					{ return symbol(CUP_FILESym.ELSE, "ELSE");}
-"false"					{ return symbol(CUP_FILESym.FALSE, "FALSE");}
-">"					{ return symbol(CUP_FILESym.GT, "GT");}
-">="					{ return symbol(CUP_FILESym.GTE, "GTE");}
-"if"					{ return symbol(CUP_FILESym.IF, "IF");}
-"int"					{ return symbol(CUP_FILESym.INT, "INT");}
-"&&"					{ return symbol(CUP_FILESym.LAND, "LAND");}
-"["					{ return symbol(CUP_FILESym.LB, "LB");}
-"{"					{ return symbol(CUP_FILESym.LCBR, "LCBR");}
-"length"					{ return symbol(CUP_FILESym.LENGTH, "LENGTH");}
-"new"					{ return symbol(CUP_FILESym.NEW, "NEW");}
-"!"					{ return symbol(CUP_FILESym.LNEG, "LNEG");}
-"||"					{ return symbol(CUP_FILESym.LOR, "LOR");}
-"<="					{ return symbol(CUP_FILESym.LTE, "LTE");}
-"<"					{ return symbol(CUP_FILESym.LT, "LT");}
-"%"					{ return symbol(CUP_FILESym.MOD, "MOD");} 
-"!="				{ return symbol(CUP_FILESym.NEQUAL, "NEQUAL");}
-"null"					{ return symbol(CUP_FILESym.NULL, "NULL");}
-"]"					{ return symbol(CUP_FILESym.RB, "RB");}
-"}"					{ return symbol(CUP_FILESym.RCBR, "RCBR");}
-"return"					{ return symbol(CUP_FILESym.RETURN, "RETURN");}
-")"					{ return symbol(CUP_FILESym.RP, "RP");}
-";"					{ return symbol(CUP_FILESym.SEMI, "SEMI");}
-"static"					{ return symbol(CUP_FILESym.STATIC, "STATIC");}
-"string"					{ return symbol(CUP_FILESym.STRING, "STRING");} 
-"this"					{ return symbol(CUP_FILESym.THIS, "THIS");}
-"true"					{ return symbol(CUP_FILESym.TRUE, "TRUE");}
-"void"					{ return symbol(CUP_FILESym.VOID, "VOID");} 
-"while"					{ return symbol(CUP_FILESym.WHILE, "WHILE");}
-<<EOF>>					{ return symbol(CUP_FILESym.EOF, "EOF"); }  
-{CLASS_ID}					{ return symbol(CUP_FILESym.CLASS_ID, "CLASS_ID", yytext());}
-{ID}					{ return symbol(CUP_FILESym.ID, "ID", yytext());}
-{QUOTE}					{ return symbol(CUP_FILESym.QUOTE, "QUOTE", yytext());}
 .|\n       		  	{ throw new Error("Unrecognized string in line " + (yyline+1) + ": \"" + yytext() + "\""); }
 
 }

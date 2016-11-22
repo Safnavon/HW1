@@ -3,56 +3,16 @@
 /************************************/
 
 import java_cup.runtime.*;
-   
+    
 /**********************/  
 /* TERMINALS (TOKENS) */
 /**********************/
 terminal PLUS;
 terminal MINUS;
-terminal MULTIPLY;
-terminal DIVIDE; 
-terminal LP;
-terminal RP;
 terminal ASSIGN;
-terminal BOOLEAN;
-terminal BREAK;
-terminal CLASS;
-terminal CLASS_ID;  
-terminal COMMA;
-terminal CONTINUE;
-terminal DOT;
-terminal EQUAL;
-terminal EXTENDS;
-terminal ELSE;
-terminal FALSE;
-terminal GT;
-terminal GTE;
-terminal ID;
-terminal IF;
-terminal INT;
-terminal LAND;
-terminal LB;
-terminal LCBR;
-terminal LENGTH;
-terminal NEW;
-terminal LNEG;
-terminal LOR;
-terminal LT;
-terminal LTE;
-terminal MOD;
-terminal NEQUAL;
-terminal NULL;
-terminal RB;
-terminal RCBR;
-terminal RETURN;
-terminal SEMI;
-terminal STATIC;
-terminal STRING;
-terminal QUOTE;
-terminal THIS;
-terminal TRUE;
-terminal VOID;
-terminal WHILE;
+terminal SWAP;
+ 
+
 
 /******************************/
 /* PRECEDENCE + ASSOCIATIVITY */
@@ -62,6 +22,8 @@ terminal WHILE;
 /* TERMINALS (TOKENS) */
 /**********************/
 terminal Integer	INTEGER;
+terminal Integer	ROW_ID;
+
 
 /*****************************************/
 /* NON TERMINALS :: IGNORE IN EXERCISE 1 */
@@ -77,13 +39,9 @@ expr      ::=	expr:e PLUS  factor:f {: RESULT = new Integer(e.intValue() + f.int
 				factor:f              {: RESULT = new Integer(f.intValue());                :}
 				;
       
-factor    ::=	factor:f MULTIPLY term:t  {: RESULT = new Integer(f.intValue() * t.intValue()); :} |
-				factor:f DIVIDE term:t {: RESULT = new Integer(f.intValue() / t.intValue()); :} |
-				term:t                 {: RESULT = new Integer(t.intValue());                :} |
-				error				 {: System.out.printf("errr"); :}								
-				;
+
    
-term      ::=	LP expr:e RP {: RESULT = e; :} |
+term      ::=	
 				INTEGER:n             {: RESULT = n; :} |
 				;
 
