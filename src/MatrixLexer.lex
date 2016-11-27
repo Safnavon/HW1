@@ -84,12 +84,12 @@ INTEGER			= 0 | [1-9][0-9]*
 <YYINITIAL> { 
     
 
-"["					{ return symbol(MatrixSym.LB, "LB");}
-"]"					{ return symbol(MatrixSym.RB, "RB");}
-";"					{ retun symbol(MatrixSym.SEMI, "SEMI");}
-"\"					{ retun symbol(MatrixSym.DIVIDE, "DIVIDE");}
+"["					{ return symbol(MatrixSym.LB, "LB");} 
+"]"					{ return symbol(MatrixSym.RB, "RB");} 
+";"					{ return symbol(MatrixSym.SEMI, "SEMI");}
+"/"					{ return symbol(MatrixSym.DIVIDE, "DIVIDE");}
 <<EOF>>					{ return symbol(MatrixSym.EOF, "EOF"); }  
-{INTEGER}			{return symbol(CUP_FILESym.INTEGER,"INTEGER", new Integer(yytext()));}   
+{INTEGER}			{return symbol(MatrixSym.INTEGER,"INTEGER", new Integer(yytext()));}   
 {WhiteSpace}		{ /* just skip what was found, do nothing */ }
 .|\n       		  	{ throw new Error("Unrecognized string in line " + (yyline+1) + ": \"" + yytext() + "\""); }
 

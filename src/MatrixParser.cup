@@ -26,16 +26,16 @@ terminal Integer	INTEGER;
 /* NON TERMINALS */
 /*****************************************/
 non terminal Rational   	rational;
-non terminal Row			row;
-non terminal Matrix			matrix;
+non terminal MatrixRow			row;
+non terminal Matrix			matrix; 
 
 /*******************/
 /* GRAMMAR SECTION */
-/*******************/ 
- 
-matrix		::= LB row:ro1 row:ro2 row:ro3 RB  			{: RESULT = new Matrix(ro1,ro2,ro3); :};
+/*******************/  
+  
+matrix		::= LB row:ro1 row:ro2 row:ro3 RB  			{: RESULT = new Matrix(new MatrixRow[]{ro1,ro2,ro3}); :};
 
-row			::= rational:ra1 rational:ra2 rational:ra3 SEMI {: RESULT = new Row(ra1, ra2, ra3); :};
+row			::= rational:ra1 rational:ra2 rational:ra3 SEMI {: RESULT = new MatrixRow(new Rational[]{ra1, ra2, ra3}); :};
 
 rational	::= INTEGER:n DIVIDE INTEGER:m 					{: RESULT = new Rational(n,m); :} |
 				INTEGER:n									{: RESULT = new Rational(n,1); :}

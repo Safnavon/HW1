@@ -84,14 +84,14 @@ INTEGER			= [1-9][0-9]*
   
 <YYINITIAL> { 
  
-{ROW_ID}					{ return symbol(MatrixSym.ROW_ID, "ROW_ID", new Integer(yytext().charAt(1));}
-"+"					{ return symbol(MatrixSym.PLUS, "PLUS");}
-"-"					{ return symbol(MatrixSym.MINUS, "MINUS");}
-"/"					{ return symbol(MatrixSym.DIVIDE, "DIVIDE");}
-"<-"					{ retun symbol(MatrixSym.ASSIGN, "ASSIGN");}
-"<->"					{ retun symbol(MatrixSym.SWAP, "SWAP");}
-<<EOF>>					{ return symbol(MatrixSym.EOF, "EOF"); }
-{INTEGER}			{return symbol(CUP_FILESym.INTEGER,"INTEGER", new Integer(yytext()));}
+{ROW_ID}					{ return symbol(OperationsParserSym.ROW_ID, "ROW_ID", new Integer(yytext().charAt(1)));}
+"+"					{ return symbol(OperationsParserSym.PLUS, "PLUS");}
+"-"					{ return symbol(OperationsParserSym.MINUS, "MINUS");} 
+"/"					{ return symbol(OperationsParserSym.DIVIDE, "DIVIDE");}
+"<-"					{ return symbol(OperationsParserSym.ASSIGN, "ASSIGN");}
+"<->"					{ return symbol(OperationsParserSym.SWAP, "SWAP");}
+<<EOF>>					{ return symbol(OperationsParserSym.EOF, "EOF"); } 
+{INTEGER}			{return symbol(OperationsParserSym.INTEGER,"INTEGER", new Integer(yytext()));}
 {WhiteSpace}		{ /* just skip what was found, do nothing */ }
 .|\n       		  	{ throw new Error("Unrecognized string in line " + (yyline+1) + ": \"" + yytext() + "\""); }
 

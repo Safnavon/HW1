@@ -1,12 +1,12 @@
 /************************************/
 /* PRELIMINARY DECLARATIONS SECTION */
 /************************************/
-
+ 
 import java_cup.runtime.*;
     
 /**********************/  
 /* TERMINALS (TOKENS) */
-/**********************/
+/**********************/ 
 terminal PLUS;
 terminal MINUS;
 terminal ASSIGN;
@@ -22,28 +22,30 @@ terminal DIVIDE;
 /**********************/
 /* TERMINALS (TOKENS) */
 /**********************/
-terminal Integer	INTEGER;
-terminal Integer	ROW_ID;
+terminal Integer	INTEGER,ROW_ID;
 
 
 /*****************************************/
-/* NON TERMINALS :: IGNORE IN EXERCISE 1 */
+/* NON TERMINALS ::  */
 /*****************************************/
-non terminal Integer    expr;
+non terminal Matrix			row_op;
+non terminal Matrix			all_operations;
+non terminal Rational   	rational;
  
 /*******************/
 /* GRAMMAR SECTION */
-/*******************/       
-/*
-expr      ::=	expr:e PLUS  factor:f 	  {: RESULT = new Integer(e.intValue() + f.intValue()); :} |
-				expr:e MINUS factor:f 	  {: RESULT = new Integer(e.intValue() - f.intValue()); :} |
-				factor:f              	  {: RESULT = new Integer(f.intValue());                :}
-				;
-   
-/*
-   
-term      ::=	INTEGER:n             	  {: RESULT = n; :} |
-				;
+/*******************/        
 
 
-      				
+				
+all_operations  ::=	all_operations row_op {:  :} | 
+				row_op              {: :}
+   				;
+   				
+row_op      ::=	ROW_ID:r1 ASSIGN ROW_ID:r2 PLUS rational:rat ROW_ID:r3	{:mat.setRow(r1,mat.getRow(r1).addRow(mat.getRow(r3).multiplyBy(rat)));:} |
+				ROW_ID:r1 ASSIGN ROW_ID:r2 MINUS rational:rat ROW_ID:r3	{:mat.setRow(r1,mat.getRow(r1).addRow(mat.getRow(r3).multiplyBy(rat).multiplyBy(new Rational(-1,1))));  :} |
+ 				ROW_ID:r1 SWAP ROW_ID:r2 {: mat.swapRows(r1,r2); :} 
+				; 
+rational	::= INTEGER:n DIVIDE INTEGER:m 					{: RESULT = new Rational(n,m); :} | 
+				INTEGER:n									{: RESULT = new Rational(n,1); :} 
+				;      				

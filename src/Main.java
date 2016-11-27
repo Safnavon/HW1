@@ -28,11 +28,11 @@ public class Main {
   static public void main(String argv[]) {    
     try
     { 
-      Lexer l = new Lexer(new FileReader(argv[0]));
+      MatrixLexer matrixLexer = new MatrixLexer(new FileReader(argv[0]));
       Symbol s;
       do{
-    	   s = l.next_token();
-      } while(s.sym != CUP_FILESym.EOF);
+    	   s = matrixLexer.next_token();
+      } while(s.sym != MatrixSym.EOF);
     } catch (Throwable e) {
     	e.printStackTrace();
     }
