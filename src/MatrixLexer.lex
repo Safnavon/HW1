@@ -39,6 +39,9 @@ import java_cup.runtime.*;
 /* CUP compatibility mode interfaces with a CUP generated parser. */
 /******************************************************************/
 %cup
+%eofval{
+  return symbol(MatrixSym.EOF, "EOF");
+%eofval}
    
 /****************/
 /* DECLARATIONS */
@@ -53,8 +56,8 @@ import java_cup.runtime.*;
     /*********************************************************************************/ 
     /* Create a new java_cup.runtime.Symbol with information about the current token */
     /*********************************************************************************/
-    private Symbol symbol(int type, String name)              {System.out.printf("%d: %s\n",yyline+1, name); return new Symbol(type, yyline, yycolumn);}
-    private Symbol symbol(int type, String name, Object value) {System.out.printf("%d: %s(%s)\n",yyline+1, name ,yytext());return new Symbol(type, yyline, yycolumn, value);}
+    private Symbol symbol(int type, String name)              {return new Symbol(type, yyline, yycolumn);}
+    private Symbol symbol(int type, String name, Object value) {return new Symbol(type, yyline, yycolumn, value);}
 
 %}
 

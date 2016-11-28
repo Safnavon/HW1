@@ -7,15 +7,15 @@ class Matrix {
     private MatrixRow[] matrix;
 
     public MatrixRow getRow(int i) {
-        return matrix[i];
+        return matrix[i-1];
     }
     public void setRow(int i, MatrixRow other) {
-        matrix[i] = other;
+        matrix[i-1] = other;
     }
     public void swapRows(int i,int j) {
-    	MatrixRow t=matrix[i];
-    	matrix[i]=matrix[j];
-    	matrix[j]=t;
+    	MatrixRow t=matrix[i-1];
+    	matrix[i-1]=matrix[j-1];
+    	matrix[j-1]=t;
     }
     public void simplify() {
         for(int i=0; i < matrix.length; i++) {
@@ -45,7 +45,7 @@ class MatrixRow {
         this.row = allZeros;
     }
 
-    public MatrixRow(Rational[] row) {
+    public MatrixRow(Rational... row) {
         this.row = row;
     }
 
@@ -54,7 +54,7 @@ class MatrixRow {
         for(int i=0; i < row.length; i++) {
             newRow.row[i] = row[i].multiply(times);
         }
-        return this;
+        return newRow;
     }
 
     public MatrixRow addRow(MatrixRow other) {
@@ -62,7 +62,7 @@ class MatrixRow {
         for(int i=0; i < row.length; i++) {
             newRow.row[i] = row[i].plus(other.row[i]);
         }
-        return this;
+        return newRow;
     }
 
     public void simplify() {
@@ -98,7 +98,7 @@ class Rational {
 
     public Rational simplified() {
         Rational res = new Rational(this.numerator, this.denominator);
-        for(int i=2; i <= res.numerator/2; i++) {
+        for(int i=2; i <= res.denominator; i++) {
             if(res.numerator % i == 0 && res.denominator % i == 0) {
                 res.numerator /= i;
                 res.denominator /= i;
@@ -120,7 +120,11 @@ class Rational {
 
     @Override
     public String toString() {
-        return numerator + "/" + denominator;
+        if(numerator % denominator == 0) {
+        	return "" + numerator/denominator;
+        } else {
+        	return numerator + "/" + denominator;
+        }
     }
 }
 

@@ -3,7 +3,15 @@
 /************************************/
  
 import java_cup.runtime.*;
-    
+
+parser code {:
+Matrix mat;
+
+  public OperationsCup(java_cup.runtime.Scanner s, Matrix mat) {
+  	super(s);
+  	this.mat = mat;
+  }
+:}
 /**********************/  
 /* TERMINALS (TOKENS) */
 /**********************/ 
@@ -12,7 +20,6 @@ terminal MINUS;
 terminal ASSIGN;
 terminal SWAP;
 terminal DIVIDE;
- 
 
 
 /******************************/
@@ -39,13 +46,16 @@ non terminal Rational   	rational;
 
 				
 all_operations  ::=	all_operations row_op {:  :} | 
-				row_op              {: :}
-   				;
+				row_op             {: :}
+				;
    				
-row_op      ::=	ROW_ID:r1 ASSIGN ROW_ID:r2 PLUS rational:rat ROW_ID:r3	{:mat.setRow(r1,mat.getRow(r1).addRow(mat.getRow(r3).multiplyBy(rat)));:} |
-				ROW_ID:r1 ASSIGN ROW_ID:r2 MINUS rational:rat ROW_ID:r3	{:mat.setRow(r1,mat.getRow(r1).addRow(mat.getRow(r3).multiplyBy(rat).multiplyBy(new Rational(-1,1))));  :} |
- 				ROW_ID:r1 SWAP ROW_ID:r2 {: mat.swapRows(r1,r2); :} 
+row_op      ::=	ROW_ID:r1 ASSIGN ROW_ID:r2 PLUS rational:rat ROW_ID:r3	{:parser.mat.setRow(r1,parser.mat.getRow(r1).addRow(parser.mat.getRow(r3).multiplyBy(rat)));:} |
+				ROW_ID:r1 ASSIGN ROW_ID:r2 MINUS rational:rat ROW_ID:r3	{:parser.mat.setRow(r1,parser.mat.getRow(r1).addRow(parser.mat.getRow(r3).multiplyBy(rat).multiplyBy(new Rational(-1,1))));  :} |
+ 				ROW_ID:r1 SWAP ROW_ID:r2 {: parser.mat.swapRows(r1,r2); :} |
+ 				ROW_ID:r1 ASSIGN rational:rat ROW_ID: r2 {: if(r1.equals(r2)){ parser.mat.setRow(r1, parser.mat.getRow(r2).multiplyBy(rat));}else{ throw new Error("Must assign row to itself");} :}
 				; 
 rational	::= INTEGER:n DIVIDE INTEGER:m 					{: RESULT = new Rational(n,m); :} | 
 				INTEGER:n									{: RESULT = new Rational(n,1); :} 
-				;      				
+				;    
+				
+				  				

@@ -25,17 +25,27 @@ import java.io.*;
 import java_cup.runtime.Symbol;
    
 public class Main {
-  static public void main(String argv[]) {    
-    try
+  static public void main(String argv[]) throws IOException {    
+	  FileWriter writer = new FileWriter(new File(argv[2]));
+      try
     { 
       MatrixLexer matrixLexer = new MatrixLexer(new FileReader(argv[0]));
-      Symbol s;
-      do{
-    	   s = matrixLexer.next_token();
-      } while(s.sym != MatrixSym.EOF);
-    } catch (Throwable e) {
-    	e.printStackTrace();
-    }
+      MatrixCup matrixParser = new MatrixCup(matrixLexer);
+      Matrix mat = (Matrix) matrixParser.parse().value;
+      
+      OperationLexer operationLexer = new OperationLexer(new FileReader(argv[1]));
+      OperationsCup operationsParser = new OperationsCup(operationLexer, mat);
+      
+      operationsParser.parse();
+      
+      writer.write(mat.toString());
+      writer.close();
+      
+      } catch (Throwable e) {
+    	  writer.write(e.getMessage());
+    } finally {
+		writer.close();
+	}
   }
 }
 
